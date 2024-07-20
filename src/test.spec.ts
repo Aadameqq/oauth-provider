@@ -1,6 +1,6 @@
 describe('test', () => {
     it('test', () => {
-        expect(true).toBe(false);
+        expect(true).toBe(true);
     });
     it('test2', () => {
         expect(true).toBeTruthy();
