@@ -2,8 +2,12 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+const greetingsToCreate = ['hello', 'cześć', 'hi', 'good day', 'hey'];
+
 async function main() {
-    console.log('test');
+    await prisma.greeting.createMany({
+        data: greetingsToCreate.map((greeting) => ({ content: greeting })),
+    });
 }
 
 main()
