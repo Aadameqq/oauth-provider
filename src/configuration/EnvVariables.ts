@@ -1,4 +1,11 @@
-import { IsEnum, IsNumber, Max, Min, validateSync } from 'class-validator';
+import {
+    IsEnum,
+    IsNumber,
+    IsString,
+    Max,
+    Min,
+    validateSync,
+} from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { Environment } from './Environment';
 
@@ -10,6 +17,15 @@ export class EnvVariables {
 
     @IsEnum(Environment)
     NODE_ENV: Environment;
+
+    @IsString()
+    SWAGGER_PATH: string;
+
+    @IsString()
+    SWAGGER_TITLE: string;
+
+    @IsString()
+    SWAGGER_DESCRIPTION: string;
 }
 
 export const validate = (config: Record<string, unknown>) => {
