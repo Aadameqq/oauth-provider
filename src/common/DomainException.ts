@@ -1,0 +1,1 @@
+class DomainException extends Error {}

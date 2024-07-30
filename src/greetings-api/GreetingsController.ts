@@ -1,19 +1,14 @@
 import {
     Controller,
     Get,
-    InternalServerErrorException,
     NotFoundException,
     Param,
     ParseIntPipe,
     Post,
 } from '@nestjs/common';
-import { GreetingsService } from './GreetingsService';
-import { GreetingNotFoundException } from './GreetingNotFoundException';
-import { GreetingId } from './GreetingId';
-
-const exceptionMapping = {
-    [GreetingNotFoundException.name]: new NotFoundException(),
-};
+import { GreetingsService } from '../greetings/GreetingsService';
+import { GreetingNotFoundException } from '../greetings/GreetingNotFoundException';
+import { GreetingId } from '../greetings/GreetingId';
 
 @Controller('greetings')
 export class GreetingsController {
@@ -22,16 +17,13 @@ export class GreetingsController {
     @Get(':id')
     public async getById(@Param('id', ParseIntPipe) id: number) {
         const greetingId = new GreetingId(id);
-
         try {
             return await this.greetingsService.findGreeting(greetingId);
         } catch (ex) {
-            const matchedEx = exceptionMapping[ex.toString()];
-            if (!matchedEx) {
-                console.error(ex);
-                throw new InternalServerErrorException();
+            if (ex instanceof GreetingNotFoundException) {
+                throw new NotFoundException();
             }
-            throw matchedEx;
+            throw ex;
         }
     }
 

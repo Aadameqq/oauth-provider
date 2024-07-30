@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GreetingsController } from './GreetingsController';
 import { GreetingsService } from './GreetingsService';
 import { PrismaModule } from '../prisma/prisma.module';
 import { PrismaGreetingsRepository } from './PrismaGreetingsRepository';
 
 @Module({
-    controllers: [GreetingsController],
     providers: [
         PrismaGreetingsRepository,
         {
@@ -19,5 +17,6 @@ import { PrismaGreetingsRepository } from './PrismaGreetingsRepository';
         },
     ],
     imports: [PrismaModule],
+    exports: [GreetingsService],
 })
 export class GreetingsModule {}
